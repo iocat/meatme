@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title><%= htmlWebpackPlugin.options.title %></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>manifest.json">
+		
+		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
+		<script>
+		  // Initialize Firebase
+		  var config = {
+		    apiKey: "AIzaSyAyWdOVNAu_SpAOxke150f4Hf-hugbNjVQ",
+		    authDomain: "eatwithme-6b2a8.firebaseapp.com",
+		    databaseURL: "https://eatwithme-6b2a8.firebaseio.com",
+		    projectId: "eatwithme-6b2a8",
+		    storageBucket: "eatwithme-6b2a8.appspot.com",
+		    messagingSenderId: "281713731766"
+		  };
+		  firebase.initializeApp(config);
+		</script>
+		
+		<% if (htmlWebpackPlugin.options.manifest.theme_color) { %>
+			<meta name="theme-color" content="<%= htmlWebpackPlugin.options.manifest.theme_color %>">
+		<% } %>
+		<% for (var chunk of webpack.chunks) { %>
+		 <% if (chunk.names.length === 1 && chunk.names[0] === 'polyfills') continue; %>
+			<% for (var file of chunk.files) { %>
+				<% if (htmlWebpackPlugin.options.preload && file.match(/\.(js|css)$/)) { %>
+					<link rel="preload" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>">
+				<% } else if (file.match(/manifest\.json$/)) { %>
+					<link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath + file %>">
+				<% } %>
+			<% } %>
+		<% } %>
+	</head>
+	<body>
+		<%= htmlWebpackPlugin.options.ssr({
+			url: '/'
+		}) %>
+		<script defer src="<%= htmlWebpackPlugin.files.chunks['bundle'].entry %>"></script>
+		<script>window.fetch||document.write('<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')</script>
+	</body>
+</html>

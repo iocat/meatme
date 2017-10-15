@@ -1,0 +1,34 @@
+{
+  "name": "foobar",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && yarn run -s serve || yarn run -s dev",
+    "build": "preact build --template src/template.html",
+    "serve": "preact build --template src/template.html && preact serve",
+    "dev": "preact watch --template src/template.html",
+    "lint": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": "eslint-config-synacor"
+  },
+  "eslintIgnore": [
+    "build/*"
+  ],
+  "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-config-synacor": "^1.1.0",
+    "if-env": "^1.0.0",
+    "preact-cli": "^1.4.1"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
+    "google-maps": "^3.2.1",
+    "jquery": "^3.2.1",
+    "preact": "^8.2.1",
+    "preact-compat": "^3.17.0",
+    "preact-router": "^2.5.5",
+    "tether": "^1.4.0"
+  }
+}
