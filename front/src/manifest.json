@@ -1,6 +1,6 @@
 {
-  "name": "Preact PWA",
-  "short_name": "Preact PWA",
+  "name": "MeatMe",
+  "short_name": "MeatMe",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
